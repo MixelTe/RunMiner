@@ -97,3 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cc548ecca125841be551fca5c443a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Strength: 2
+  CrackPrefab: {fileID: -795616202159466321, guid: 456cd652eea162f49bef171275112c00, type: 3}

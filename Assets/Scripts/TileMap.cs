@@ -4,65 +4,71 @@ using UnityEngine;
 
 public class TileMap : MonoBehaviour
 {
-    public int Width;
+    public SpriteRenderer MineTop;
     public Tile[] TilePrefabs;
     public Vector2 Shift;
 
-    private GameMap _map;
-    private int _layerPast = 0;
-    private int _layer;
+    [HideInInspector] public GameMap Map;
+    private int _layer = 0;
 
-    void Start()
+
+    public void GenerateMap(int width, int height, int top)
     {
-
-    }
-
-    void Update()
-    {
-
-    }
-
-    public void GenerateMap(int height, int top)
-    {
-        _map = new GameMap(Width, height);
+        Map = new GameMap(width, height);
         _layer = top;
 
         for (int y = 0; y < top; y++)
 		{
-			for (int x = 0; x < _map.Width; x++)
+            for (int x = 0; x < Map.Width; x++)
 			{
 				var i = y == top - 1 ? 0 : Random.Range(1, TilePrefabs.Length);
                 CreateTile(x, y, TilePrefabs[i]);
 			}
-		}
-	}
+        }
+
+        MineTop.transform.position = new Vector2(0, height - 1.375f);
+        MineTop.size = new Vector2(width, height - _layer);
+    }
 
     public void Move()
     {
-        _map.Move();
-        _layer += 1;
-        _layerPast += 1;
-        for (int y = 0; y < _map.Height; y++)
+        Map.Move();
+        _layer++;
+        for (int y = 0; y < Map.Height; y++)
         {
-            for (int x = 0; x < _map.Width; x++)
+            for (int x = 0; x < Map.Width; x++)
             {
-                var tile = _map[x, y];
+                var tile = Map[x, y];
                 if (!tile) continue;
                 tile.transform.position = tile.transform.position + new Vector3(0, 1);
 			}
         }
 
-        for (int x = 0; x < Width; x++)
+        for (int x = 0; x < Map.Width; x++)
         {
             CreateTile(x, 0, TilePrefabs.GetRandom(1));
         }
+
+        if (MineTop)
+		{
+            var h = Map.Height - _layer;
+            if (h > 0) 
+            { 
+                MineTop.size = new Vector2(Map.Width, h); 
+            }
+            else
+            {
+                Destroy(MineTop.gameObject);
+                MineTop = null;
+            }
+		}
     }
 
-    public void CreateTile(int x, int y, Tile tilePref)
+    private void CreateTile(int x, int y, Tile tilePref)
     {
         Vector2 pos = new(x + Shift.x, y + Shift.y);
         var tile = Instantiate(tilePref, pos, Quaternion.identity, transform);
-        _map[x, y] = tile;
+        Map[x, y] = tile;
     }
 
 
@@ -97,6 +103,10 @@ public class TileMap : MonoBehaviour
             Destroy(this[x, y].gameObject);
             this[x, y] = null;
         }
+        public void DestroyTile(Vector2Int pos)
+        {
+            DestroyTile(pos.x, pos.y);
+        }
 
         public Tile this[int x, int y]
         {
@@ -107,6 +117,17 @@ public class TileMap : MonoBehaviour
             set
             {
                 _tiles[(y + _indexOffset) % Height, x] = value;
+            }
+        }
+        public Tile this[Vector2Int pos]
+        {
+            get
+            {
+                return this[pos.x, pos.y];
+            }
+            set
+            {
+                this[pos.x, pos.y] = value;
             }
         }
     }
