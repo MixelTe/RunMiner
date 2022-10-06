@@ -33,8 +33,7 @@ public class Player : MonoBehaviour
         else if (dir == Directions.Left) newPos += new Vector2Int(-1, 0);
         else if (dir == Directions.Right) newPos += new Vector2Int(1, 0);
 
-        if (newPos.x < 0 || newPos.x > _map.Map.Width ||
-            newPos.y < 0 || newPos.y > _map.Map.Height) return;
+        if (_map.Map.OutOfBounds(newPos)) return;
 
         var tile = _map.Map[newPos];
         if (!tile || tile.Break())

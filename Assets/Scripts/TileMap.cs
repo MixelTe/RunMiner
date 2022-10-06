@@ -108,6 +108,19 @@ public class TileMap : MonoBehaviour
             DestroyTile(pos.x, pos.y);
         }
 
+        public bool OutOfBounds(int x, int y)
+		{
+            if (x < 0) return true;
+            if (y < 0) return true;
+            if (x >= Width) return true;
+            if (y >= Height) return true;
+            return false;
+        }
+        public bool OutOfBounds(Vector2Int pos)
+        {
+            return OutOfBounds(pos.x, pos.y);
+        }
+
         public Tile this[int x, int y]
         {
             get
