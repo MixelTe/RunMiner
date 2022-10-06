@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e9dc8ea37c02542afd78fc01f509a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSwipeDistane: 20
+  minSwipeDistane: 100
   onSwipe:
     m_PersistentCalls:
       m_Calls:

@@ -37,14 +37,8 @@ public class Player : MonoBehaviour
             newPos.y < 0 || newPos.y > _map.Map.Height) return;
 
         var tile = _map.Map[newPos];
-        if (!tile)
+        if (!tile || tile.Break())
 		{
-            Pos = newPos;
-            return;
-        }
-        if (tile.Break())
-		{
-            _map.Map.DestroyTile(newPos);
             Pos = newPos;
         }
 	}
