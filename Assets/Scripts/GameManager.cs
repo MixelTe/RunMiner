@@ -45,18 +45,14 @@ public class GameManager : MonoBehaviour
         }
         MainCamera.BottomLeft = _cameraStartPos - new Vector2(0, _movement);
 
-        if (Input.GetKeyDown(KeyCode.W)) _player.Move(Player.Directions.Up);
-        if (Input.GetKeyDown(KeyCode.S)) _player.Move(Player.Directions.Down);
-        if (Input.GetKeyDown(KeyCode.A)) _player.Move(Player.Directions.Left);
-        if (Input.GetKeyDown(KeyCode.D)) _player.Move(Player.Directions.Right);
+        if (Input.GetKeyDown(KeyCode.W)) _player.Move(Directions.Up);
+        if (Input.GetKeyDown(KeyCode.S)) _player.Move(Directions.Down);
+        if (Input.GetKeyDown(KeyCode.A)) _player.Move(Directions.Left);
+        if (Input.GetKeyDown(KeyCode.D)) _player.Move(Directions.Right);
     }
 
-    public void MovePlayer(string dirs)
+    public void MovePlayer(Directions dir)
     {
-        var dir = Player.Directions.Up;
-        if (dirs == "down") dir = Player.Directions.Down;
-        if (dirs == "left") dir = Player.Directions.Left;
-        if (dirs == "right") dir = Player.Directions.Right;
         _player.Move(dir);
     }
 }

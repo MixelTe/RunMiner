@@ -16,3 +16,8 @@ public static class Stuff
 		return array[Random.Range(start, array.Length)];
 	}
 }
+
+public enum Directions
+{
+	Left, Right, Up, Down
+}

@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public enum Directions
-    {
-        Left, Right, Up, Down
-	}
     [HideInInspector] public Vector2Int Pos;
     private TileMap _map;
     private Vector2 _movement;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position = Pos + _map.Shift + _movement;
