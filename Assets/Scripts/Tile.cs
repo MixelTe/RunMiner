@@ -11,7 +11,8 @@ public class Tile : MonoBehaviour
 	public GameObject DiamondOrePrefab;
 
 	[HideInInspector] public bool HasOre = false;
-	
+	[HideInInspector] public bool DiamondOre = false;
+
 	private Crack _crack;
 	private int _damage;
 
@@ -20,15 +21,21 @@ public class Tile : MonoBehaviour
 	{
 		Instantiate(diamond ? DiamondOrePrefab : GoldOrePrefab, transform);
 		HasOre = true;
+		DiamondOre = diamond;
 	}
 
-	public bool Break()
+	public bool Break(int strength = 1)
 	{
 		if (!_crack) _crack = Instantiate(CrackPrefab, transform);
-		_crack.Enlarge(1f / Strength);
-		_damage++;
+		_crack.Enlarge(1f / Strength * strength);
+		_damage += strength;
 		if (Strength - _damage <= 0)
 		{
+			if (HasOre)
+			{
+				if (DiamondOre) GameManager.Instance.GoldOreBroken();
+				else GameManager.Instance.GoldOreBroken();
+			}
 			Destroy(gameObject);
 			return true;
 		}

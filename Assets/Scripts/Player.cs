@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public Vector2Int Pos;
+    public Vector2Int Pos;
+    public int Strength = 1;
+
     private TileMap _map;
     private Vector2 _movement;
 
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
         if (_map.Map.OutOfBounds(newPos)) return;
 
         var tile = _map.Map[newPos];
-        if (!tile || tile.Break())
+        if (!tile || tile.Break(Strength))
 		{
             Pos = newPos;
         }
