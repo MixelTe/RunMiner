@@ -15,6 +15,10 @@ public static class Stuff
 		if (array.Length <= start) return default;
 		return array[Random.Range(start, array.Length)];
 	}
+	static public bool RandomBool(float chance)
+	{
+		return Random.value <= chance;
+	}
 }
 
 public enum Directions

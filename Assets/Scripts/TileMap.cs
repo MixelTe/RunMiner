@@ -5,8 +5,11 @@ using UnityEngine;
 public class TileMap : MonoBehaviour
 {
     public SpriteRenderer MineTop;
-    public Tile[] TilePrefabs;
     public Vector2 Shift;
+    public int LayerHeight;
+    [Range(0, 0.2f)] public float OreChance;
+    [Range(0, 0.3f)] public float DiamondOreChance;
+    public Tile[] TilePrefabs;
 
     [HideInInspector] public GameMap Map;
     private int _layer = 0;
@@ -15,15 +18,11 @@ public class TileMap : MonoBehaviour
     public void GenerateMap(int width, int height, int top)
     {
         Map = new GameMap(width, height);
-        _layer = top;
+        _layer = 0;
 
-        for (int y = 0; y < top; y++)
+        for (int y = top - 1; y >= 0; y--)
 		{
-            for (int x = 0; x < Map.Width; x++)
-			{
-				var i = y == top - 1 ? 0 : Random.Range(1, TilePrefabs.Length);
-                CreateTile(x, y, TilePrefabs[i]);
-			}
+            GenerateLayer(y);
         }
 
         MineTop.transform.position = new Vector2(0, height - 1.375f);
@@ -33,7 +32,6 @@ public class TileMap : MonoBehaviour
     public void Move()
     {
         Map.Move();
-        _layer++;
         for (int y = 0; y < Map.Height; y++)
         {
             for (int x = 0; x < Map.Width; x++)
@@ -44,10 +42,7 @@ public class TileMap : MonoBehaviour
 			}
         }
 
-        for (int x = 0; x < Map.Width; x++)
-        {
-            CreateTile(x, 0, TilePrefabs.GetRandom(1));
-        }
+        GenerateLayer();
 
         if (MineTop)
 		{
@@ -64,11 +59,37 @@ public class TileMap : MonoBehaviour
 		}
     }
 
-    private void CreateTile(int x, int y, Tile tilePref)
+    private Tile CreateTile(int x, int y, Tile tilePref)
     {
         Vector2 pos = new(x + Shift.x, y + Shift.y);
         var tile = Instantiate(tilePref, pos, Quaternion.identity, transform);
         Map[x, y] = tile;
+        return tile;
+    }
+
+    private void GenerateLayer(int y = 0)
+	{
+        _layer++;
+        if (_layer == 1)
+        {
+			for (int x = 0; x < Map.Width; x++) 
+                CreateTile(x, y, TilePrefabs[0]);
+            return;
+        }
+        var layer = Mathf.FloorToInt(_layer / LayerHeight);
+        var nextLayerTileChance = (_layer - layer * LayerHeight - 1) / (float)LayerHeight;
+
+        for (int x = 0; x < Map.Width; x++)
+		{
+            var nextLayer = Random.value < nextLayerTileChance ? 1 : 0;
+            var i = layer + 1 + nextLayer;
+            i = Mathf.Min(i, TilePrefabs.Length - 1);
+
+            var tile = CreateTile(x, y, TilePrefabs[i]);
+         
+            if (Stuff.RandomBool(OreChance))
+                tile.AddOre(Stuff.RandomBool(DiamondOreChance));
+		}
     }
 
 

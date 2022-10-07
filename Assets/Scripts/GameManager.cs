@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     public void MovePlayer(Directions dir)
     {
+        if (!Running) return;
         _player.Move(dir);
     }
 }

@@ -123,6 +123,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &128678292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 128678294}
+  - component: {fileID: 128678293}
+  m_Layer: 0
+  m_Name: SwipeSim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &128678293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128678292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b586609f3383c41911473b3aef8200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SwipeTrial: {fileID: 8266947141529051796, guid: bf6fd068b9266a349a846f17e5aaba46, type: 3}
+  SwipeStart: {x: 4, y: 3.5}
+  SwipeLenght: 2
+  SwipeSpeed: 25
+--- !u!4 &128678294
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128678292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +356,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &663093931
 MonoBehaviour:
@@ -463,7 +511,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1349933832
 SpriteRenderer:
@@ -547,12 +595,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MineTop: {fileID: 1349933832}
-  TilePrefabs:
-  - {fileID: 4824045337733120703, guid: 1ed137ef71bf62c46b63d77d297ff345, type: 3}
-  - {fileID: 4824045337733120703, guid: 2c3aae461abfe4e419c97b6d219a0ce1, type: 3}
-  - {fileID: 4824045337733120703, guid: 30185d51aa42932438e771b37e2cf744, type: 3}
-  - {fileID: 4824045337733120703, guid: 8a666747797a0c948823e138beb5b448, type: 3}
   Shift: {x: 0.5, y: -0.5}
+  LayerHeight: 40
+  OreChance: 0.05
+  DiamondOreChance: 0.15
+  TilePrefabs:
+  - {fileID: 2625250943521881941, guid: e22b112efd23b064fa32c46613cdcf4e, type: 3}
+  - {fileID: 2625250943521881941, guid: 1cdfa21c70cf7184184eac3cb99543e5, type: 3}
+  - {fileID: 2625250943521881941, guid: d61f1cf71c6aaed41968d4304bba3d67, type: 3}
+  - {fileID: 2625250943521881941, guid: f8635054f46350346a7fead9db3391d8, type: 3}
 --- !u!4 &1968375195
 Transform:
   m_ObjectHideFlags: 0
@@ -566,7 +617,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2015155646
 GameObject:

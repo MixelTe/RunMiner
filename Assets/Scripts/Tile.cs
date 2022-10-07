@@ -7,15 +7,19 @@ public class Tile : MonoBehaviour
 {
 	public int Strength;
 	public Crack CrackPrefab;
-	public bool Broken = false;
+	public GameObject GoldOrePrefab;
+	public GameObject DiamondOrePrefab;
+
+	[HideInInspector] public bool HasOre = false;
 	
 	private Crack _crack;
 	private int _damage;
-	private SpriteRenderer _renderer;
 
-	private void Start()
+
+	public void AddOre(bool diamond)
 	{
-		_renderer = GetComponent<SpriteRenderer>();
+		Instantiate(diamond ? DiamondOrePrefab : GoldOrePrefab, transform);
+		HasOre = true;
 	}
 
 	public bool Break()
@@ -25,10 +29,9 @@ public class Tile : MonoBehaviour
 		_damage++;
 		if (Strength - _damage <= 0)
 		{
-			Destroy(_crack.gameObject);
-			_renderer.enabled = false;
-			Broken = true;
+			Destroy(gameObject);
+			return true;
 		}
-		return Broken;
+		return false;
 	}
 }
