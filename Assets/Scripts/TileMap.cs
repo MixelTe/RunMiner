@@ -12,13 +12,13 @@ public class TileMap : MonoBehaviour
     public Tile[] TilePrefabs;
 
     [HideInInspector] public GameMap Map;
-    private int _layer = 0;
+    [HideInInspector] public int Layer = 0;
 
 
     public void GenerateMap(int width, int height, int top)
     {
         Map = new GameMap(width, height);
-        _layer = 0;
+        Layer = 0;
 
         for (int y = top - 1; y >= 0; y--)
 		{
@@ -26,7 +26,7 @@ public class TileMap : MonoBehaviour
         }
 
         MineTop.transform.position = new Vector2(0, height - 1.375f);
-        MineTop.size = new Vector2(width, height - _layer);
+        MineTop.size = new Vector2(width, height - Layer);
     }
 
     public void Move()
@@ -46,7 +46,7 @@ public class TileMap : MonoBehaviour
 
         if (MineTop)
 		{
-            var h = Map.Height - _layer;
+            var h = Map.Height - Layer;
             if (h > 0) 
             { 
                 MineTop.size = new Vector2(Map.Width, h); 
@@ -69,15 +69,15 @@ public class TileMap : MonoBehaviour
 
     private void GenerateLayer(int y = 0)
 	{
-        _layer++;
-        if (_layer == 1)
+        Layer++;
+        if (Layer == 1)
         {
 			for (int x = 0; x < Map.Width; x++) 
                 CreateTile(x, y, TilePrefabs[0]);
             return;
         }
-        var layer = Mathf.FloorToInt(_layer / LayerHeight);
-        var nextLayerTileChance = (_layer - layer * LayerHeight - 1) / (float)LayerHeight;
+        var layer = Mathf.FloorToInt(Layer / LayerHeight);
+        var nextLayerTileChance = (Layer - layer * LayerHeight - 1) / (float)LayerHeight;
 
         for (int x = 0; x < Map.Width; x++)
 		{

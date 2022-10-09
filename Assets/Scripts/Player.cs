@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
     public Vector2Int Pos;
     public int Strength = 1;
+    [HideInInspector] public UnityEvent OnMove;
 
     private TileMap _map;
     private Vector2 _movement;
@@ -41,6 +43,7 @@ public class Player : MonoBehaviour
         if (!tile || tile.Break(Strength))
 		{
             Pos = newPos;
+            OnMove.Invoke();
         }
 	}
 }

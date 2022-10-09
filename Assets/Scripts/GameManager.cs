@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public TileMap TileMap;
     public CameraController MainCamera;
+    public TileMap TileMap;
+    public int MapWidth;
     public Player PlayerPrefab;
     public Vector2Int SpawnPos;
     public float MoveSpeed;
-    public int MapWidth;
+    public Enemy EnemyPrefab;
+    public int EnemyOffset;
     public Slider ProgressionBar;
     public float UpgradeCost;
     [Range(1, 1.5f)] public float UpgradeCostMultiplier;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     public bool Running = true;
 
     private Player _player;
+    private Enemy _enemy;
     private float _movement = 0;
     private Vector2 _cameraStartPos;
 
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         _player = Instantiate(PlayerPrefab);
         _player.Setup(SpawnPos, TileMap);
+
         _cameraStartPos = MainCamera.BottomLeft;
         MainCamera.Width = MapWidth;
         MainCamera.Aplly();
@@ -42,6 +46,9 @@ public class GameManager : MonoBehaviour
         ProgressionBar.value = 0;
 
         TileMap.GenerateMap(MapWidth, MainCamera.Height + 1, SpawnPos.y);
+
+        _enemy = Instantiate(EnemyPrefab);
+        _enemy.Setup(SpawnPos + new Vector2Int(0, EnemyOffset), TileMap, _player);
     }
 
     // Update is called once per frame
@@ -55,6 +62,7 @@ public class GameManager : MonoBehaviour
             _movement -= 1;
             TileMap.Move();
             _player.Shift();
+            _enemy.Shift();
             if (_player.Pos.y >= TileMap.Map.Height)
 			{
                 Running = false;
@@ -66,6 +74,13 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S)) _player.Move(Directions.Down);
         if (Input.GetKeyDown(KeyCode.A)) _player.Move(Directions.Left);
         if (Input.GetKeyDown(KeyCode.D)) _player.Move(Directions.Right);
+        if (Input.GetKey(KeyCode.LeftShift))
+		{
+            if (Input.GetKey(KeyCode.W)) _player.Move(Directions.Up);
+            if (Input.GetKey(KeyCode.S)) _player.Move(Directions.Down);
+            if (Input.GetKey(KeyCode.A)) _player.Move(Directions.Left);
+            if (Input.GetKey(KeyCode.D)) _player.Move(Directions.Right);
+		}
     }
 
     public void MovePlayer(Directions dir)

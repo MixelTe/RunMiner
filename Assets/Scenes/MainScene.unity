@@ -636,12 +636,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 212d3ffbd3dd6404aa8ec4dccb3a98ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileMap: {fileID: 1968375194}
   MainCamera: {fileID: 519420033}
+  TileMap: {fileID: 1968375194}
+  MapWidth: 8
   PlayerPrefab: {fileID: 5233186219804157507, guid: 144c04854c8d6d340ac206de53cddf13, type: 3}
   SpawnPos: {x: 4, y: 5}
   MoveSpeed: 1
-  MapWidth: 8
+  EnemyPrefab: {fileID: 3342738812148787072, guid: 2263e67864dc2a34db7ed3d0b8c9ba3e, type: 3}
+  EnemyOffset: 5
   ProgressionBar: {fileID: 1104652420}
   UpgradeCost: 8
   UpgradeCostMultiplier: 1.4
@@ -987,6 +989,7 @@ MonoBehaviour:
   - {fileID: 2625250943521881941, guid: 1cdfa21c70cf7184184eac3cb99543e5, type: 3}
   - {fileID: 2625250943521881941, guid: d61f1cf71c6aaed41968d4304bba3d67, type: 3}
   - {fileID: 2625250943521881941, guid: f8635054f46350346a7fead9db3391d8, type: 3}
+  Layer: 0
 --- !u!4 &1968375195
 Transform:
   m_ObjectHideFlags: 0
